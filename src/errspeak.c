@@ -2,7 +2,7 @@
 
 
 ssize_t (*libc_write)(int fd, const void *buf, size_t count);
-void *(libc_perror)(const char *s);
+void (*libc_perror)(const char *s);
 static int pin[2];
 
 
@@ -59,3 +59,4 @@ void perror(const char *s){
 	libc_perror(s);
 	speak(s);
 }
+
