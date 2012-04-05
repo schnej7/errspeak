@@ -1,6 +1,6 @@
 #ifndef ERRSPEAK
 #define ERRSPEAK
 
-int is_installed( char * program_name );
+char * get_path( char * program_name );
 
 #endif
