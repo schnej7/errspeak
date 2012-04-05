@@ -1,8 +1,12 @@
 #include "errspeak.h"
 
 
+ssize_t (*libc_write)(int fd, const void *buf, size_t count);
+
+
 void __attribute__ ((constructor)) init(void){
 	puts("errspeak.so:init()");
+	*(void **)(&libc_write)=dlsym(RTLD_NEXT,"write");
 }
 
 
@@ -12,9 +16,6 @@ void __attribute__ ((constructor)) fini(void){
 
 
 ssize_t write(int fd, const void *buf, size_t count){
-	ssize_t (*libc_write)(int fd, const void *buf, size_t count);
-	*(void **)(&libc_write)=dlsym(RTLD_NEXT,"write");
-
 	puts("errspeak.so:write()");
 
 	ssize_t retval=(libc_write)(fd,buf,count);
