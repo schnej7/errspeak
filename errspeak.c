@@ -1,6 +1,34 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include "errspeak.h"
+
+void perror(const char *s){
+  if( !get_path("espeak") ){
+    fprintf( stderr, "%s\n", s );
+    return;
+  }
+  else if( fork()) {
+    char * espeak = "espeak ";
+    char * to_say = (char *) malloc (strlen(espeak) + strlen(s) + 1);
+    int i;
+    for( i = 0; i < strlen(espeak); i++ ){
+      to_say[i] = espeak[i];
+    }
+    for( i = 0; i < strlen(s); i++ ){
+      to_say[strlen(espeak) + i] = s[i];
+    }
+    to_say[strlen(espeak)+i] = '\0';
+    fprintf( stderr, "%s\n", to_say );
+    fclose( stdout );
+    fclose( stderr );
+    int rc = system( to_say );
+    rc++;
+    return;
+  }
+
+}
 
 char * get_path( char * program_name ){
   char * complete_path = getenv( "PATH" );
@@ -29,7 +57,7 @@ char * get_path( char * program_name ){
 
     if( fd ){
       while( a_path ) a_path = strtok( NULL, ":" );
-      close( fd );
+      fclose( fd );
       free(my_path);
       return full_path;
     }
