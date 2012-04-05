@@ -1,3 +1,11 @@
+/************************************
+*                                   *
+*                                   *
+*     Written by Jerry Schneider    *
+*                                   *
+*                                   *
+*************************************/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

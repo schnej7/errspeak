@@ -1,3 +1,11 @@
+/************************************
+*                                   *
+*                                   *
+*     Written by Jerry Schneider    *
+*                                   *
+*                                   *
+*************************************/
+
 #ifndef ERRSPEAK
 #define ERRSPEAK
 

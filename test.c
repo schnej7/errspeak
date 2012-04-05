@@ -1,7 +1,12 @@
-#include <stdlib.h>
+/************************************
+*                                   *
+*                                   *
+*     Written by Jerry Schneider    *
+*                                   *
+*                                   *
+*************************************/
 #include <stdio.h>
-#include "errspeak.h"
-
+#include <stdlib.h>
 
 int main( int argv, char * argc[] ){
   perror("THIS IS AN ERROR!");
