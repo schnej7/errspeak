@@ -1,0 +1,6 @@
+*.swp
+*/*.swp
+*.so
+*/*.so
+build
+test
