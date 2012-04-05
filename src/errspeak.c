@@ -7,31 +7,29 @@ static int pin[2];
 
 
 void __attribute__ ((constructor)) init(void){
-	puts("errspeak.so:init()");
 	*(void **)(&libc_write)=dlsym(RTLD_NEXT,"write");
 	*(void **)(&libc_perror)=dlsym(RTLD_NEXT,"perror");
 
-	pipe( pin);
+	pipe(pin);
 
 	if(fork()){//parent
-		dup2( pin[0], STDIN_FILENO);
-		close( pin[0]);
-		close( pin[1]);
+		dup2(pin[0], STDIN_FILENO);
+		close(pin[0]);
+		close(pin[1]);
 
 		unsetenv("LD_PRELOAD");//Do you enjoy forkbombs?
 		execvp("espeak",(char *const[]){"espeak","--stdin",NULL});
 		exit(1);
 
 	}else{//child
-		close( pin[0]);
+		close(pin[0]);
 
 	}
-
 }
 
 
 void __attribute__ ((constructor)) fini(void){
-	puts("errspeak.so:fini()");
+	close(pin[1]);
 }
 
 
