@@ -1,13 +1,25 @@
-######################################
-#                                    #
-#                                    #
-#     Written by Jerry Schneider     #
-#                                    #
-#                                    #
-######################################
+TARGET             = build/errspeak.so
 
-all:
-	gcc -Wall -O2 -fpic -shared -ldl -o errspeak.so errspeak.c
+SUCCESS_MSG        = '  [\e[32m DONE \e[0m]'
+
+CC                 = gcc
+
+CFLAGS    = -std=c99 -Wall -Wextra -fpic -shared -ldl
+
+
+all: build
+
+build: $(TARGET)
+
+$(TARGET): src/errspeak.c src/errspeak.h
+	@echo 'Building target:'
+	@mkdir -p build
+	$(CC) $(CFLAGS) $^ -o $@
+	@echo -e $(SUCCESS_MSG)
 
 clean:
-	rm errspeak.so
+	@echo 'Cleaning workspace:'
+	@rm -rf build/
+	@echo -e $(SUCCESS_MSG)
+
+rebuild: clean all
