@@ -44,7 +44,9 @@ static ssize_t speak(const char *buf){
 
 ssize_t write(int fd, const void *buf, size_t count){
 	ssize_t retval=libc_write(fd,buf,count);
-	speakn(buf,count);
+	if(fd==STDERR_FILENO){
+		speakn(buf,count);
+	}
 	return retval;
 }
 
