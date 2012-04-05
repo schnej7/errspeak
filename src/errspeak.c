@@ -45,11 +45,8 @@ static ssize_t speak(const char *buf){
 }
 
 
-
 ssize_t write(int fd, const void *buf, size_t count){
-	puts("errspeak.so:write()");
-
-	ssize_t retval=(libc_write)(fd,buf,count);
+	ssize_t retval=libc_write(fd,buf,count);
 	speakn(buf,count);
 	return retval;
 }
