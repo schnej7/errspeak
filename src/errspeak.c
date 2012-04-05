@@ -2,12 +2,14 @@
 
 
 ssize_t (*libc_write)(int fd, const void *buf, size_t count);
+void *(libc_perror)(const char *s);
 static int pin[2];
 
 
 void __attribute__ ((constructor)) init(void){
 	puts("errspeak.so:init()");
 	*(void **)(&libc_write)=dlsym(RTLD_NEXT,"write");
+	*(void **)(&libc_perror)=dlsym(RTLD_NEXT,"perror");
 
 	pipe( pin);
 
