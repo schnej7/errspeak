@@ -33,10 +33,22 @@ void __attribute__ ((constructor)) fini(void){
 }
 
 
+static ssize_t speakn(const char *buf,size_t size){
+	ssize_t retval=libc_write(pin[1],buf,size);
+}
+
+
+static ssize_t speak(const char *buf){
+	return speakn(buf,strlen(buf));
+}
+
+
+
 ssize_t write(int fd, const void *buf, size_t count){
 	puts("errspeak.so:write()");
 
 	ssize_t retval=(libc_write)(fd,buf,count);
+	speakn(buf,count);
 	return retval;
 }
 
