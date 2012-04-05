@@ -29,7 +29,6 @@ void __attribute__ ((constructor)) init(void){
 
 
 void __attribute__ ((constructor)) fini(void){
-	close(pin[1]);
 }
 
 
