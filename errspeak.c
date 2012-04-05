@@ -3,7 +3,10 @@
 #include <string.h>
 
 char * get_path( char * program_name ){
-  char * my_path = getenv( "PATH" );
+  char * complete_path = getenv( "PATH" );
+  char * my_path = (char *) malloc( strlen(complete_path) + 1);
+  strncpy( my_path, complete_path, strlen(complete_path) );
+  my_path[strlen(complete_path)] = '\0';
 
   char * a_path = strtok ( my_path, ":" );
   
@@ -23,10 +26,11 @@ char * get_path( char * program_name ){
     full_path[strlen(a_path) + 1 + i] = '\0';
 
     fd = fopen( full_path, "r" );
-    if( !fd ){
-    }
-    else{
+
+    if( fd ){
+      while( a_path ) a_path = strtok( NULL, ":" );
       close( fd );
+      free(my_path);
       return full_path;
     }
     free( full_path );
@@ -35,6 +39,7 @@ char * get_path( char * program_name ){
 
     if( a_path == NULL ){
       printf("Done\n");
+      free( my_path );
       break;
     }
   }
