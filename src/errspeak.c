@@ -56,29 +56,8 @@ ssize_t write(int fd, const void *buf, size_t count){
 
 
 void perror(const char *s){
-	if( !get_path("espeak") ){
-		fprintf( stderr, "%s\n", s );
-		return;
-	}
-	else if( fork()) {
-		char * espeak = "espeak ";
-		char * to_say = (char *) malloc (strlen(espeak) + strlen(s) + 1);
-		int i;
-		for( i = 0; i < strlen(espeak); i++ ){
-			to_say[i] = espeak[i];
-		}
-		for( i = 0; i < strlen(s); i++ ){
-			to_say[strlen(espeak) + i] = s[i];
-		}
-		to_say[strlen(espeak)+i] = '\0';
-		fprintf( stderr, "%s\n", to_say );
-		fclose( stdout );
-		fclose( stderr );
-		int rc = system( to_say );
-		rc++;
-		return;
-	}
-
+	libc_perror(s);
+	speak(s);
 }
 
 
